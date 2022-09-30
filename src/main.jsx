@@ -42,7 +42,7 @@ function Main() {
           </div>
         </div>
       </div>
-      <SnackBar />
+     <SnackBar/>
     </div>
   );
 }

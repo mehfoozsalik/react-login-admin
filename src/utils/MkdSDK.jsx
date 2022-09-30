@@ -111,12 +111,12 @@ export default function MkdSDK() {
     }
   };  
 
-  this.check = async function (role) {
+  this.check = async function (role, token) {
     //TODO
     const header = {
       "Content-Type": "application/json",
       "x-project": base64Encode,
-      Authorization: "Bearer " + localStorage.getItem("token"),
+      Authorization: "Bearer " + token,
     };
     const body = {
       "role": role

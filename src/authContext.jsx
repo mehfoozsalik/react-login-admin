@@ -4,19 +4,13 @@ import MkdSDK from "./utils/MkdSDK";
 export const AuthContext = React.createContext();
 
 function getAuthFromLocalStorage() {
-  return localStorage.getItem('Auth')
-    ? localStorage.getItem('Auth')
-    : false
+  return localStorage.getItem("Auth") ? localStorage.getItem("Auth") : false;
 }
 function getRoleFromLocalStorage() {
-  return localStorage.getItem('role')
-    ? localStorage.getItem('role')
-    : null
+  return localStorage.getItem("role") ? localStorage.getItem("role") : null;
 }
 function getTokenFromLocalStorage() {
-  return localStorage.getItem('token')
-    ? localStorage.getItem('token')
-    : null
+  return localStorage.getItem("token") ? localStorage.getItem("token") : null;
 }
 
 const initialState = {
@@ -30,15 +24,15 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
       window.location.href = "/" + action.payload.role + "/dashboard";
-      localStorage.setItem("Auth", true)
-      localStorage.setItem("role",action.payload.role)
-      localStorage.setItem("token",action.payload.token)
+      localStorage.setItem("Auth", true);
+      localStorage.setItem("role", action.payload.role);
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        isAuthenticated:true,
+        isAuthenticated: true,
         user: action.payload.user_id,
         token: action.payload.token,
-        role: action.payload.role
+        role: action.payload.role,
       };
     case "LOGOUT":
       localStorage.clear();
@@ -60,27 +54,25 @@ export const tokenExpireError = (dispatch, errorMessage) => {
     dispatch({
       type: "LOGOUT",
     });
-    window.location.href = "/" + role + "/login";
   }
 };
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
   React.useEffect(() => {
-    //TODO
-    // const checkAuth = async () => {
-    //   const status = await sdk.check(state.role)
-    //   if(status === 200){
-    //     dispatch({
-    //       type: "LOGIN",
-    //     });
-    //   }
-    //   else{
-    //     tokenExpireError()
-    //   }
-    // }
-    // checkAuth()
+    // TODO
+    const checkAuth = async () => {
+      const status = await sdk.check(!state.role ? state.role : "none", !state.token ? state.token : 'none')
+      if(status == 200){
+        dispatch({
+          type: "LOGIN",
+        });
+      }
+      if(status == 400 || status == 401 ){
+        // tokenExpireError(dispatch,"TOKEN_EXPIRED")
+      }
+    }
+    checkAuth()
   }, []);
 
   return (

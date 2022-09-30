@@ -3,19 +3,21 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import MkdSDK from "../utils/MkdSDK";
-import { useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../authContext";
+import { GlobalContext } from "../globalContext";
 
 const AdminLoginPage = () => {
   const schema = yup
-    .object({
-      email: yup.string().email().required(),
-      password: yup.string().required(),
-    })
-    .required();
-
+  .object({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+  })
+  .required();
+  
+  const { snapdispatch } = React.useContext(GlobalContext);
   const { dispatch } = React.useContext(AuthContext);
-  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -29,12 +31,11 @@ const AdminLoginPage = () => {
     let {login} = new MkdSDK();
     //TODO
     const loginInfo = await login(data.email, data.password, 'admin')
-    navigate('/admin/dashboard')
     dispatch({
       type:'LOGIN',
       payload: loginInfo
     })
-    
+    snapdispatch({ type: "SNACKBAR", payload: { message: "You have Succesfully logged in" } })
   };
 
   return (
