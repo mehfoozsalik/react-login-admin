@@ -56,6 +56,7 @@ const GlobalProvider = ({ children }) => {
       value={{
         state,
         dispatch,
+        showToast,
       }}
     >
       {children}

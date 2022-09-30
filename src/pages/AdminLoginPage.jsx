@@ -5,17 +5,17 @@ import * as yup from "yup";
 import MkdSDK from "../utils/MkdSDK";
 
 import { AuthContext } from "../authContext";
-import { GlobalContext } from "../globalContext";
+
 
 const AdminLoginPage = () => {
   const schema = yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-  })
-  .required();
-  
-  const { snapdispatch } = React.useContext(GlobalContext);
+    .object({
+      email: yup.string().email().required(),
+      password: yup.string().required(),
+    })
+    .required();
+
+
   const { dispatch } = React.useContext(AuthContext);
 
   const {
@@ -28,14 +28,14 @@ const AdminLoginPage = () => {
   });
 
   const onSubmit = async (data) => {
-    let {login} = new MkdSDK();
+    let { login } = new MkdSDK();
     //TODO
-    const loginInfo = await login(data.email, data.password, 'admin')
+    const loginInfo = await login(data.email, data.password, "admin");
+    
     dispatch({
-      type:'LOGIN',
-      payload: loginInfo
-    })
-    snapdispatch({ type: "SNACKBAR", payload: { message: "You have Succesfully logged in" } })
+      type: "LOGIN",
+      payload: loginInfo,
+    });
   };
 
   return (

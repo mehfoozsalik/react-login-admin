@@ -6,6 +6,8 @@ import AdminDashboardPage from "./pages/AdminDashboardPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
+
+
 function renderRoutes(role) {
   switch (role) {
     case "admin":
@@ -42,7 +44,7 @@ function Main() {
           </div>
         </div>
       </div>
-     <SnackBar/>
+     <SnackBar isAuth={state.isAuthenticated}/>
     </div>
   );
 }

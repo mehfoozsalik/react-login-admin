@@ -1,8 +1,18 @@
 import React from "react";
 import { GlobalContext } from "../globalContext";
-const SnackBar = () => {
-  const { state, dispatch } = React.useContext(GlobalContext);
 
+const SnackBar = ({isAuth}) => {
+  const { state, dispatch,showToast } = React.useContext(GlobalContext);
+  function SnakBarOpen(isAuth) {
+    if (isAuth) {
+      showToast(dispatch, "You are logged In")
+    } else {
+      showToast(dispatch, "You are logged Out")
+}
+  }
+  React.useEffect(() => {
+    SnakBarOpen(isAuth);
+  }, [isAuth]);
   const show = state.globalMessage.length > 0;
   return show ? (
     <div

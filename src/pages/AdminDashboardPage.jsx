@@ -5,6 +5,11 @@ import { useNavigate } from "react-router-dom";
 const AdminDashboardPage = () => {
   const navigate = useNavigate();
   const { dispatch } = React.useContext(AuthContext);
+
+  React.useEffect(()=>{
+
+  },[])
+
   const handleClick = () => {
     dispatch({
       type: "LOGOUT",
