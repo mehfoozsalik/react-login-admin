@@ -23,9 +23,9 @@ export default function MkdSDK() {
       "x-project": base64Encode,
     };
     const bodyload = {
-      "email":email,
-      "password":password,
-      "role":role
+      "email": email,
+      "password": password,
+      "role": role
     }
     const setAuth = await fetch(
       `https://reacttask.mkdlabs.com/v2/api/lambda/login`,
@@ -81,7 +81,6 @@ export default function MkdSDK() {
           throw new Error(jsonGet.message);
         }
         return jsonGet;
-      
       case "PAGINATE":
         if (!payload.page) {
           payload.page = 1;
@@ -114,6 +113,23 @@ export default function MkdSDK() {
 
   this.check = async function (role) {
     //TODO
+    const header = {
+      "Content-Type": "application/json",
+      "x-project": base64Encode,
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    };
+    const body = {
+      "role": role
+    }
+    const checkAuth = await fetch(
+      `https://reacttask.mkdlabs.com/v2/api/lambda/check`,
+      {
+        method: "post",
+        headers: header,
+        body: JSON.stringify(body),
+      }
+    );
+    return checkAuth.status;
   };
 
   return this;

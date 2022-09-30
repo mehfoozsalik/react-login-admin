@@ -29,10 +29,12 @@ const AdminLoginPage = () => {
     let {login} = new MkdSDK();
     //TODO
     const loginInfo = await login(data.email, data.password, 'admin')
+    navigate('/admin/dashboard')
     dispatch({
       type:'LOGIN',
       payload: loginInfo
     })
+    
   };
 
   return (
